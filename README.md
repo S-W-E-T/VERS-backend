@@ -25,6 +25,8 @@ Follow these steps to set up and run the VERS-backend on your local machine:
    ```bash
    PORT=
    MONGO_URL=
+   JWT_SECRET=
+   NODE_ENV=
    ```
 
 3. Run the development server:
