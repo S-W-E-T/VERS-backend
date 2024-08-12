@@ -1,23 +1,55 @@
-// Import the 'express' module along with 'Request' and 'Response' types from express
-import express, { Request, Response } from "express";
+import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
+import morgan from "morgan";
+import colors from "colors";
 
+// Custom imports
+import connectDB from "./config/db";
+
+// Routes imports here
+import authRoutes from "./routes/auth_routes";
+
+// Enable colors
+colors.enable();
+
+// DOTENV
 dotenv.config();
 
-// Create an Express application
+// REST OBJECT
 const app = express();
 
-// Specify the port number for the server
-const PORT: number = process.env.PORT ? parseInt(process.env.PORT) : 5000;
+// MIDDLEWARE
+app.use(cors());
+app.use(express.json()); // Body parser
+app.use(morgan("dev"));
 
-// Define a route for the root path ('/')
-app.get("/", (req: Request, res: Response) => {
-  // Send a response to the client
-  res.send("Hello, TypeScript + Node.js + Express!");
+// ROUTES
+app.get("/", (req, res) => {
+  res.send("API is running...");
 });
+app.use("/api/v1/auth", authRoutes);
 
-// Start the server and listen on the specified port
-app.listen(PORT, () => {
-  // Log a message when the server is successfully running
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+// PORT
+const PORT = process.env.PORT || 8000;
+
+// Connect to DB and start server
+const startServer = async () => {
+  try {
+    await connectDB();
+    console.log(colors.cyan.underline("MongoDB connected successfully"));
+
+    app.listen(PORT, () => {
+      console.log(
+        colors.bgWhite.red.bold(
+          `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+        )
+      );
+    });
+  } catch (error) {
+    console.error(colors.red.bold("Failed to connect to MongoDB:"), error);
+    process.exit(1);
+  }
+};
+
+startServer();
