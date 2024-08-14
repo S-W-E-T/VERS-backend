@@ -3,10 +3,8 @@ import { Response } from "express";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_secret_key";
 
-interface TokenPayload {
-  email: string;
-  accessApproved: boolean;
-  role: string;
+export interface TokenPayload {
+  _id: string;
 }
 
 interface JwtPayload {
