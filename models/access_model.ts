@@ -9,6 +9,7 @@ export enum Role {
 
 // Define an interface representing an access document in MongoDB
 export interface IAccess extends Document {
+  _id: mongoose.Types.ObjectId;
   userId: IUser["_id"]; // Reference to the User model's _id field
   role: Role; // Role field using the enum
   accessApproved: boolean;
