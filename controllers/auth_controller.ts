@@ -2,12 +2,12 @@ import { Request, Response } from "express";
 import colors from "colors";
 import User, { IUser } from "../models/user_model";
 import Access, { IAccess, Role } from "../models/access_model";
-import { generateTokenAndSetCookie } from "../utils/jwt";
+import { generateTokenAndSetCookie, TokenPayload } from "../utils/jwt";
 import { hashPassword, comparePassword } from "../utils/password";
 
 colors.enable();
 
-export const register = async (req: Request, res: Response): Promise<void> => {
+export const signUp = async (req: Request, res: Response): Promise<void> => {
   const { name, email, phoneNumber, password, role } = req.body;
   if (!name || !email || !phoneNumber || !password || !role) {
     res.status(400).json({ error: "Please fill in all fields" });
@@ -45,10 +45,8 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     await newAccess.save();
 
     // Generate JWT and set cookie
-    const tokenPayload = {
-      email: savedUser.email,
-      accessApproved: newAccess.accessApproved,
-      role: newAccess.role,
+    const tokenPayload: TokenPayload = {
+      _id: newAccess._id.toString(),
     };
 
     const token = generateTokenAndSetCookie(tokenPayload, res);
@@ -106,10 +104,8 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 
     // Generate JWT and set cookie
-    const tokenPayload = {
-      email: user.email,
-      accessApproved: access.accessApproved,
-      role: access.role,
+    const tokenPayload: TokenPayload = {
+      _id: access._id.toString(),
     };
 
     const token = generateTokenAndSetCookie(tokenPayload, res);
