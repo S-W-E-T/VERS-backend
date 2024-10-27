@@ -1,4 +1,4 @@
-import { Location } from "./../constant/location";
+import { Location } from "../constants/location";
 import { Request, Response } from "express";
 import { Entry } from "../models/entries_model"; // Importing the model
 
@@ -9,11 +9,9 @@ export const createEntry = async (req: Request, res: Response) => {
 
     // Validation
     if (!name || !purpose || !inTime || !location) {
-      return res
-        .status(400)
-        .json({
-          message: "Name, purpose of visit, Location and inTime are required.",
-        });
+      return res.status(400).json({
+        message: "Name, purpose of visit, Location and inTime are required.",
+      });
     }
 
     const newEntry = new Entry({
