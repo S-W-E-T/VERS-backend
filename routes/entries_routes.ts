@@ -1,27 +1,27 @@
-import { Router } from 'express';
+import { Router } from "express";
 import {
   createEntry,
   updateEntry,
   getAllEntries,
   getEntryById,
-  deleteEntry
-} from '../controllers/entries_controller';
+  deleteEntry,
+} from "../controllers/entries_controller";
 
 const router = Router();
 
+// Get all entries
+router.get("/", getAllEntries);
+
 // Create a new entry
-router.post('/entries', createEntry);
+router.post("/", createEntry);
 
 // Update an existing entry
-router.put('/entries/:id', updateEntry);
-
-// Get all entries
-router.get('/entries', getAllEntries);
+router.put("/:id", updateEntry);
 
 // Get a specific entry by ID
-router.get('/entries/:id', getEntryById);
+router.get("/:id", getEntryById);
 
 // Delete an entry
-router.delete('/entries/:id', deleteEntry);
+router.delete("/:id", deleteEntry);
 
 export default router;
