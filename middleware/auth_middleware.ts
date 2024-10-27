@@ -30,6 +30,7 @@ export const authenticate = async (
       "userId",
       "name email phoneNumber"
     );
+    // console.log(colors.white.bgGreen("user: "), user);
     if (!user) {
       console.log(colors.red("Error: Not authenticated"));
       return res.status(401).json({ message: "Not authenticated" });
