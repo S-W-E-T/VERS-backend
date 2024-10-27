@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { Location } from "../constant/location";
+import { Location } from "../constants/location";
 // Interface for the Entry model
 export interface EntryDocument extends Document {
   name: string;
