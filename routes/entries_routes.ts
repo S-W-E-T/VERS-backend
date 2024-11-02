@@ -5,6 +5,7 @@ import {
   getAllEntries,
   getEntryById,
   deleteEntry,
+  getEntriesByUser,
 } from "../controllers/entries_controller";
 import { authenticate } from "../middleware/auth_middleware";
 import { authorized } from "../middleware/checkPermission";
@@ -22,6 +23,9 @@ router.get(
 
 // Create a new entry
 router.post("/", authenticate, authorized([Role.USER]), createEntry);
+
+// Get all entries by a specific user
+router.get("/my", authenticate, authorized([Role.USER]), getEntriesByUser);
 
 // Update an existing entry
 router.put("/:id", authenticate, authorized([Role.USER]), updateEntry);
