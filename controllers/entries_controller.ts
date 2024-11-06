@@ -18,6 +18,7 @@ export const createEntry = async (req: Request, res: Response) => {
       name,
       purpose,
       inTime,
+      userId: req?.user?._id, // Assuming the user is logged in
       location: location || Location.OTHER, // Default location if none
       outTime: outTime || null, // If no outTime provided
       description: description || "", // Default description if none
@@ -79,6 +80,23 @@ export const updateEntry = async (req: Request, res: Response) => {
 export const getAllEntries = async (req: Request, res: Response) => {
   try {
     const entries = await Entry.find();
+    return res.status(200).json(entries);
+  } catch (error) {
+    if (error instanceof Error) {
+      return res
+        .status(500)
+        .json({ message: "Error retrieving entries", error: error.message });
+    } else {
+      return res.status(500).json({ message: "Unknown error occurred" });
+    }
+  }
+};
+
+export const getEntriesByUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req?.user?._id; // Assuming the user is logged in
+    const entries = await Entry.find({ userId });
+
     return res.status(200).json(entries);
   } catch (error) {
     if (error instanceof Error) {
