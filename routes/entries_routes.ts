@@ -16,8 +16,8 @@ const router = Router();
 // Get all entries
 router.get(
   "/",
-  authenticate,
-  authorized([Role.ADMIN, Role.USER]),
+  // authenticate,
+  // authorized([Role.ADMIN, Role.USER]),
   getAllEntries
 );
 

@@ -11,6 +11,7 @@ import connectDB from "./config/db";
 import authRoutes from "./routes/auth_routes";
 import accessRoutes from "./routes/access_routes";
 import entriesRoutes from "./routes/entries_routes";
+import scheduleRoutes from "./routes/schedule_routes"
 
 // Enable colors
 colors.enable();
@@ -33,6 +34,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/access", accessRoutes);
 app.use("/api/v1/entries", entriesRoutes);
+app.use("/api/v1/schedule",scheduleRoutes);
 
 // PORT
 const PORT = process.env.PORT || 8000;
