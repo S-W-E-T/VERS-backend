@@ -19,7 +19,9 @@ export const createEntry = async (req: Request, res: Response) => {
       purpose,
       inTime,
       userId: req?.user?._id, // Assuming the user is logged in
-      location: location || Location.OTHER, // Default location if none
+      location: Object.values(Location).includes(location as Location)
+        ? location
+        : Location.OTHER,
       outTime: outTime || null, // If no outTime provided
       description: description || "", // Default description if none
     });
