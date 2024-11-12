@@ -81,7 +81,7 @@ export const updateEntry = async (req: Request, res: Response) => {
 // Get all entries
 export const getAllEntries = async (req: Request, res: Response) => {
   try {
-    const entries = await Entry.find();
+    const entries = await Entry.find().sort({ updatedAt: -1 }).exec();
     return res.status(200).json(entries);
   } catch (error) {
     if (error instanceof Error) {
@@ -97,7 +97,7 @@ export const getAllEntries = async (req: Request, res: Response) => {
 export const getEntriesByUser = async (req: Request, res: Response) => {
   try {
     const userId = req?.user?._id; // Assuming the user is logged in
-    const entries = await Entry.find({ userId });
+    const entries = await Entry.find({ userId }).sort({ updatedAt: -1 }).exec();
 
     return res.status(200).json(entries);
   } catch (error) {
